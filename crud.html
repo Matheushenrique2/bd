@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!--Bootstrap 5 icons CDN-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <title>CRUD Operations</title>
+
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    
+
+    <section class="p-3">
+
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm">New User <i class="bi bi-people"></i></button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-hover mt-3 text-center table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th>Acesso</th>
+                            <th>Senha</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Tipo de Plano</th>
+                            <th>Data de Nascimento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="data">
+                        <tr th:each="usuario : ${usuarios}" class="text-center">
+                            <td th:text="${usuario.id}"></td>
+                            <td th:text="${usuario.FOTO}"></td>
+                            <td th:text="${usuario.NOME_COMPLETO}"></td>
+                            <td th:text="${usuario.NIVEL_ACESSO}"></td>
+                            <td th:text="${usuario.SENHA}"></td>
+                            <td th:text="${usuario.EMAIL}"></td>
+                            <td th:text="${usuario.TELEFONE}"></td>
+                            <td th:text="${usuario.plano.NOME}"></td>
+                            <td th:text="${usuario.DATA_NASC}"></td>
+                            <td>
+                                <a th:href="@{/api/usuario/ver/{id}(id=${usuario.id})}"  
+                                th:class="'btn btn-sm '+${usuario.NIVEL_ACESSO == 'ATIVO' ? 'btn-primary' : 'btn-warning'}"> Ver </a> 
+                            </td>
+                        </tr>
+                        
+                        </tbody>
+    
+                    </table>
+                </div>
+            </div>
+    
+        </section>
+    
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!--Modal Form-->
+    <div class="modal fade" id="userForm">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Fill the Form</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="#" id="myForm">
+
+                        <div class="card imgholder">
+                            <label for="imgInput" class="upload">
+                                <input type="file" name="" id="imgInput">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </label>
+                            <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="img">
+                        </div>
+
+                        <div class="inputField">
+                            <div>
+                                <label for="name">Nome:</label>
+                                <input type="text" name="" id="name" required>
+                            </div>
+                            <div>
+                                <label for="age">Acesso:</label>
+                                <input type="text" name="" id="age" required>
+                            </div>
+                            <div>
+                                <label for="city">Senha:</label>
+                                <input type="text" name="" id="city" required>
+                            </div>
+                            <div>
+                                <label for="email">E-mail:</label>
+                                <input type="email" name="" id="email" required>
+                            </div>
+                            <div>
+                                <label for="phone">Telefone:</label>
+                                <input type="text" name="" id="phone" minlength="11" maxlength="11" required>
+                            </div>
+                            <div>
+                                <label for="input" class="from-label">Tipos de Planos:</label>
+                                <input type="text" name="" id="post" required>
+                            </div>
+                            <div>
+                                <label for="sDate">Data de Nascimento:</label>
+                                <input type="date" name="" id="sDate" required>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="myForm" class="btn btn-primary submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Read Data Modal-->
+    <div class="modal fade" id="readData">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Profile</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="#" id="myForm">
+
+                        <div class="card imgholder">
+                            <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="showImg">
+                        </div>
+
+                        <div class="inputField">
+                            <div>
+                                <label for="name">Name:</label>
+                                <input type="text" name="" id="showName" disabled>
+                            </div>
+                            <div>
+                                <label for="age">Age:</label>
+                                <input type="number" name="" id="showAge" disabled>
+                            </div>
+                            <div>
+                                <label for="city">City:</label>
+                                <input type="text" name="" id="showCity" disabled>
+                            </div>
+                            <div>
+                                <label for="email">E-mail:</label>
+                                <input type="email" name="" id="showEmail" disabled>
+                            </div>
+                            <div>
+                                <label for="phone">Number:</label>
+                                <input type="text" name="" id="showPhone" minlength="11" maxlength="11" disabled>
+                            </div>
+                            <div>
+                                <label for="post">Post:</label>
+                                <input type="text" name="" id="showPost" disabled>
+                            </div>
+                            <div>
+                                <label for="sDate">Start Date:</label>
+                                <input type="date" name="" id="showsDate" disabled>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
